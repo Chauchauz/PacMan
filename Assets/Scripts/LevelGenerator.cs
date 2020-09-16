@@ -33,17 +33,18 @@ public class LevelGenerator : MonoBehaviour
     void Start()
     {
         mapGrid = new Transform[levelMap.GetLength(0), levelMap.GetLength(1)];
-        LoadLevel();
+        LoadQuarter();
         CorrectRotations();
+        LoadLevel();
     }
 
-    public void LoadLevel() //Instantiates all sprites in correct x,z coordinates *16x16 pixels are scaled by 6.25 (100/16) to fit the grid in prefabs already
+    public void LoadQuarter() //Instantiates all sprites in correct x,z coordinates *16x16 pixels are scaled by 6.25 (100/16) to fit the grid in prefabs already
     {
         for (int i = 0; i < levelMap.GetLength(0); i++)
         {
             for (int j = 0; j < levelMap.GetLength(1); j++)
             {
-                Transform newSprite = (Transform)Instantiate(spriteArray[levelMap[i, j]], new Vector3(j, 0, -i), Quaternion.Euler(new Vector3(90, 0, 0))); //Rotation 90°x to face camera
+                Transform newSprite = Instantiate(spriteArray[levelMap[i, j]], new Vector3(j, 0, -i), Quaternion.Euler(new Vector3(90, 0, 0))); //Rotation 90°x to face camera
                 mapGrid[i, j] = newSprite;
             }
         }
@@ -102,6 +103,18 @@ public class LevelGenerator : MonoBehaviour
                     case 7:
                         break;
                 }
+            }
+        }
+    }
+
+    public void LoadLevel() //Clones quarter level to create whole level
+    {
+        for (int i = 0; i < mapGrid.GetLength(0); i++)
+        {
+            for (int j = 0; j < mapGrid.GetLength(1); j++)
+            {
+                Instantiate(mapGrid[i, j], new Vector3(mapGrid.GetLength(1) * 2 - 1 - j, 0.0f, -i), mapGrid[i, j].transform.rotation);
+                Instantiate(mapGrid[i, j], new Vector3(j, 0.0f, mapGrid.GetLength(0) * -2 + 1 + i), mapGrid[i, j].transform.rotation);
             }
         }
     }
