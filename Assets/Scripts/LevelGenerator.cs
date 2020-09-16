@@ -8,6 +8,10 @@ public class LevelGenerator : MonoBehaviour
     //TextAsset levelMap = Resources.Load<TextAsset>("PacMan Level Map");
     int[,] levelMap =
      {
+     // -> j
+     // |
+     // v
+     // i
          {1,2,2,2,2,2,2,2,2,2,2,2,2,7},     // 0: Empty
          {2,5,5,5,5,5,5,5,5,5,5,5,5,4},     // 1: Outside Corner
          {2,5,3,4,4,3,5,3,4,4,4,3,5,4},     // 2: Outside Wall
@@ -24,21 +28,13 @@ public class LevelGenerator : MonoBehaviour
          {2,2,2,2,2,1,5,3,3,0,4,0,0,0},
          {0,0,0,0,0,0,5,0,0,0,4,0,0,0},
      };
+    private Transform[,] mapGrid;
 
     void Start()
     {
+        mapGrid = new Transform[levelMap.GetLength(0), levelMap.GetLength(1)];
         LoadLevel();
         CorrectRotations();
-    }
-
-    void Update()
-    {
-        
-    }
-
-    public void LoadSprite(Transform sprite, Vector3 position) //Instantiates given object at given position with rotation (90, 0, 0) so it faces the camera
-    {
-        Instantiate(sprite, position, Quaternion.Euler(new Vector3(90, 0, 0)));
     }
 
     public void LoadLevel() //Instantiates all sprites in correct x,z coordinates *16x16 pixels are scaled by 6.25 (100/16) to fit the grid in prefabs already
@@ -47,7 +43,8 @@ public class LevelGenerator : MonoBehaviour
         {
             for (int j = 0; j < levelMap.GetLength(1); j++)
             {
-                LoadSprite(spriteArray[levelMap[i, j]], new Vector3(j, 0, -i));
+                Transform newSprite = (Transform)Instantiate(spriteArray[levelMap[i, j]], new Vector3(j, 0, -i), Quaternion.Euler(new Vector3(90, 0, 0))); //Rotation 90°x to face camera
+                mapGrid[i, j] = newSprite;
             }
         }
     }
@@ -60,7 +57,50 @@ public class LevelGenerator : MonoBehaviour
             {
                 switch (levelMap[i, j])
                 {
-                    case 
+                    case 1:
+                        if ((i > 0 && j < levelMap.GetLength(1) - 1) && (levelMap[i - 1, j] == 2 && levelMap[i, j + 1] == 2))
+                        {
+                            mapGrid[i, j].transform.Rotate(0.0f, 0.0f, 90.0f);
+                        }
+                        else if ((i > 0 && j > 0) && (levelMap[i - 1, j] == 2 && levelMap[i, j - 1] == 2))
+                        {
+                            mapGrid[i, j].transform.Rotate(0.0f, 0.0f, 180.0f);
+                        }
+                        else if ((i < levelMap.GetLength(0) - 1 && j > 0) && (levelMap[i + 1, j] == 2 && levelMap[i, j - 1] == 2))
+                        {
+                            mapGrid[i, j].transform.Rotate(0.0f, 0.0f, 270.0f);
+                        }
+                        break;
+                    case 2:
+                        if ((i > 0 && i < levelMap.GetLength(0) - 1) && (levelMap[i + 1, j] == 2 || levelMap[i - 1, j] == 2))
+                        {
+                            mapGrid[i, j].transform.Rotate(0.0f, 0.0f, 90.0f);
+                        }
+                        break;
+                    case 3:
+                        
+
+                        if ((i > 0 && j < levelMap.GetLength(1) - 1) && ((levelMap[i - 1, j] == 3 || levelMap[i - 1, j] == 4) && (levelMap[i, j + 1] == 3 || levelMap[i, j + 1] == 4)))
+                        {
+                            mapGrid[i, j].transform.Rotate(0.0f, 0.0f, 90.0f);
+                        }
+                        else if ((i > 0 && j > 0) && ((levelMap[i - 1, j] == 3 || levelMap[i - 1, j] == 4) && (levelMap[i, j - 1] == 3 || levelMap[i, j - 1] == 4)))
+                        {
+                            mapGrid[i, j].transform.Rotate(0.0f, 0.0f, 180.0f);
+                        }
+                        else if ((i < levelMap.GetLength(0) - 1 && j > 0) && ((levelMap[i + 1, j] == 3 || levelMap[i + 1, j] == 4) && (levelMap[i, j - 1] == 3 || levelMap[i, j - 1] == 4)))
+                        {
+                            mapGrid[i, j].transform.Rotate(0.0f, 0.0f, 270.0f);
+                        }
+                        break;
+                    case 4:
+                        if ((i > 0 && i < levelMap.GetLength(0) - 1) && (levelMap[i + 1, j] == 3 || levelMap[i - 1, j] == 3 || levelMap[i + 1, j] == 7 || levelMap[i - 1, j] == 7))
+                        {
+                            mapGrid[i, j].transform.Rotate(0.0f, 0.0f, 90.0f);
+                        }
+                        break;
+                    case 7:
+                        break;
                 }
             }
         }
