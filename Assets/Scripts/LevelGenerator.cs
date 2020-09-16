@@ -32,6 +32,8 @@ public class LevelGenerator : MonoBehaviour
 
     void Start()
     {
+        Camera.main.transform.position = new Vector3(14.5f, 10.0f, -14.0f);
+        Camera.main.orthographicSize = 15;
         mapGrid = new Transform[levelMap.GetLength(0), levelMap.GetLength(1)];
         LoadQuarter();
         CorrectRotations();
@@ -79,8 +81,6 @@ public class LevelGenerator : MonoBehaviour
                         }
                         break;
                     case 3:
-                        
-
                         if ((i > 0 && j < levelMap.GetLength(1) - 1) && ((levelMap[i - 1, j] == 3 || levelMap[i - 1, j] == 4) && (levelMap[i, j + 1] == 3 || levelMap[i, j + 1] == 4)))
                         {
                             mapGrid[i, j].transform.Rotate(0.0f, 0.0f, 90.0f);
@@ -95,12 +95,20 @@ public class LevelGenerator : MonoBehaviour
                         }
                         break;
                     case 4:
-                        if ((i > 0 && i < levelMap.GetLength(0) - 1) && (levelMap[i + 1, j] == 3 || levelMap[i - 1, j] == 3 || levelMap[i + 1, j] == 7 || levelMap[i - 1, j] == 7))
+                        if (i > 0 && (levelMap[i - 1, j] == 3 || (levelMap[i - 1, j] == 4 && mapGrid[i - 1, j].transform.rotation.z == 0.5) || levelMap[i - 1, j] == 7))
+                        {
+                            mapGrid[i, j].transform.Rotate(0.0f, 0.0f, 90.0f);
+                        }
+                        else if (i < levelMap.GetLength(0) - 1 && levelMap[i + 1, j] == 3 || (levelMap[i + 1, j] == 4 && mapGrid[i + 1, j].transform.rotation.z == 0.5) || levelMap[i + 1, j] == 7)
                         {
                             mapGrid[i, j].transform.Rotate(0.0f, 0.0f, 90.0f);
                         }
                         break;
                     case 7:
+                        if (i == 0 && j == levelMap.GetLength(1) - 1)
+                        {
+                            mapGrid[i, j].transform.localScale = new Vector3(-6.25f, 6.25f, 6.25f);
+                        }
                         break;
                 }
             }
@@ -114,11 +122,44 @@ public class LevelGenerator : MonoBehaviour
             for (int j = 0; j < mapGrid.GetLength(1); j++)
             {
                 Transform newSprite2 = Instantiate(mapGrid[i, j], new Vector3(mapGrid.GetLength(1) * 2 - 1 - j, 0.0f, -i), mapGrid[i, j].transform.rotation); //coordinates flipped horizontally
-                newSprite2.transform.localScale = new Vector3(-6.25f, 6.25f, 6.25f);
-                Transform newSprite3 = Instantiate(mapGrid[i, j], new Vector3(j, 0.0f, mapGrid.GetLength(0) * -2 + 1 + i), mapGrid[i, j].transform.rotation); //coordinates flipped vertically
-                newSprite3.transform.localScale = new Vector3(6.25f, -6.25f, 6.25f);
-                Transform newSprite4 = Instantiate(mapGrid[i, j], new Vector3(mapGrid.GetLength(1) * 2 - 1 - j, 0.0f, mapGrid.GetLength(0) * -2 + 1 + i), mapGrid[i, j].transform.rotation); //coordinates flipped both ways
-                newSprite4.transform.localScale = new Vector3(-6.25f, -6.25f, 6.25f);
+                if (levelMap[i, j] == 1 || levelMap[i, j] == 3 )
+                {
+                    newSprite2.transform.Rotate(0.0f, 0.0f, 90.0f);
+                    if (newSprite2.transform.rotation.z == 0.5)
+                    {
+                        newSprite2.transform.Rotate(0.0f, 0.0f, 180.0f);
+                    }
+                }
+                else if (levelMap[i, j] == 7)
+                {
+                    newSprite2.transform.localScale = new Vector3(6.25f, 6.25f, 6.25f);
+                }
+                if (i != 14)
+                {
+                    Transform newSprite3 = Instantiate(mapGrid[i, j], new Vector3(j, 0.0f, mapGrid.GetLength(0) * -2 + 2 + i), mapGrid[i, j].transform.rotation); //coordinates flipped vertically
+                    if (levelMap[i, j] == 1 || levelMap[i, j] == 3)
+                    {
+                        newSprite3.transform.Rotate(0.0f, 0.0f, 90.0f);
+                        if (newSprite3.transform.rotation.z != 0.5)
+                        {
+                            newSprite3.transform.Rotate(0.0f, 0.0f, 180.0f);
+                        }
+                    }
+                    else if (levelMap[i, j] == 7)
+                    {
+                        newSprite3.transform.localScale = new Vector3(6.25f, 6.25f, 6.25f);
+                        newSprite3.transform.Rotate(0.0f, 0.0f, 180.0f);
+                    }
+                    Transform newSprite4 = Instantiate(mapGrid[i, j], new Vector3(mapGrid.GetLength(1) * 2 - 1 - j, 0.0f, mapGrid.GetLength(0) * -2 + 2 + i), mapGrid[i, j].transform.rotation); //coordinates flipped both ways
+                    if (levelMap[i, j] == 1 || levelMap[i, j] == 3)
+                    {
+                        newSprite4.transform.Rotate(0.0f, 0.0f, 180.0f);
+                    }
+                    else if (levelMap[i, j] == 7)
+                    {
+                        newSprite4.transform.Rotate(0.0f, 0.0f, 180.0f);
+                    }
+                }
             }
         }
     }
