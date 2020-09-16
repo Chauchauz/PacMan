@@ -121,6 +121,58 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &480494085
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 480494087}
+  - component: {fileID: 480494086}
+  m_Layer: 0
+  m_Name: Level Generator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &480494086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 480494085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11a78d361e6eead458c8edc2791f1a88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteArray:
+  - {fileID: 630574877246550770, guid: d11214d808e94dc41ad6edaaa3945f5d, type: 3}
+  - {fileID: 3910347985950638860, guid: fa7405efd9afadd49a6485acca8d353c, type: 3}
+  - {fileID: 1885775155365690867, guid: 8b91ad212a2bdc540a6bb7f714f392d5, type: 3}
+  - {fileID: 8900540321101869829, guid: 01bf69b859d2e8c419b8a166adc0f8dc, type: 3}
+  - {fileID: 7267818375315256565, guid: 594b5e8db3e99544e9bb2a5e340299b1, type: 3}
+  - {fileID: 540311515535873110, guid: efde4e320b0725545a837fcaa7bd3bf8, type: 3}
+  - {fileID: 9213278821200242745, guid: e37abe217ff31414f888233cbc87bbf1, type: 3}
+  - {fileID: 6446121630685155704, guid: af90f2c80a7782d4896d700a9a2fbf15, type: 3}
+--- !u!4 &480494087
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 480494085}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.8473593, y: 1.583615, z: -0.26115802}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -290,7 +342,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 10, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -306,7 +358,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1701624001}
   m_Layer: 0
-  m_Name: GhostAnimator
+  m_Name: Ghost Animator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
