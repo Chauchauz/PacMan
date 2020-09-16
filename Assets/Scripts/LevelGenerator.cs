@@ -113,8 +113,12 @@ public class LevelGenerator : MonoBehaviour
         {
             for (int j = 0; j < mapGrid.GetLength(1); j++)
             {
-                Instantiate(mapGrid[i, j], new Vector3(mapGrid.GetLength(1) * 2 - 1 - j, 0.0f, -i), mapGrid[i, j].transform.rotation);
-                Instantiate(mapGrid[i, j], new Vector3(j, 0.0f, mapGrid.GetLength(0) * -2 + 1 + i), mapGrid[i, j].transform.rotation);
+                Transform newSprite2 = Instantiate(mapGrid[i, j], new Vector3(mapGrid.GetLength(1) * 2 - 1 - j, 0.0f, -i), mapGrid[i, j].transform.rotation); //coordinates flipped horizontally
+                newSprite2.transform.localScale = new Vector3(-6.25f, 6.25f, 6.25f);
+                Transform newSprite3 = Instantiate(mapGrid[i, j], new Vector3(j, 0.0f, mapGrid.GetLength(0) * -2 + 1 + i), mapGrid[i, j].transform.rotation); //coordinates flipped vertically
+                newSprite3.transform.localScale = new Vector3(6.25f, -6.25f, 6.25f);
+                Transform newSprite4 = Instantiate(mapGrid[i, j], new Vector3(mapGrid.GetLength(1) * 2 - 1 - j, 0.0f, mapGrid.GetLength(0) * -2 + 1 + i), mapGrid[i, j].transform.rotation); //coordinates flipped both ways
+                newSprite4.transform.localScale = new Vector3(-6.25f, -6.25f, 6.25f);
             }
         }
     }
